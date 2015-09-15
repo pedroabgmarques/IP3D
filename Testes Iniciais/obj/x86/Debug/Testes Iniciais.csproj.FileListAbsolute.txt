@@ -24,3 +24,4 @@ C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\obj\x86\Debug\Test
 C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\obj\x86\Debug\Testes Iniciais.exe
 C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\obj\x86\Debug\Testes Iniciais.pdb
 C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\Content\textures\test.jpg
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\Content\models\spaceship.xnb

@@ -1,0 +1,6 @@
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\ContentProject\ContentProject\bin\PSM\Content\spaceship.xnb
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\ContentProject\ContentProject\bin\PSM\Content\spaceship.fbx
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\ContentProject\ContentProject\bin\PSM\IgnoreMe.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\ContentProject\ContentProject\obj\PSM\ContentProject.csprojResolveAssemblyReference.cache
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\ContentProject\ContentProject\obj\PSM\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\ContentProject\ContentProject\obj\PSM\IgnoreMe.dll

@@ -1,0 +1,2 @@
+Content\spaceship.xnb
+Content\spaceship.fbx

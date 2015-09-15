@@ -11,14 +11,20 @@ namespace Testes_Iniciais
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D SpriteTexture;
-        Vector2 pos;
+        Model model;
+        private float angle;
+
+        private Matrix world = Matrix.CreateTranslation(Vector3.Zero);
+        private Matrix view = Matrix.CreateLookAt(new Vector3(0, 0, 10), new Vector3(0, 0, 0), Vector3.UnitY);
+        private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
+
+        private Vector3 position;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1366;
-            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferredBackBufferHeight = 600;
             Content.RootDirectory = "Content";
         }
 
@@ -31,7 +37,8 @@ namespace Testes_Iniciais
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            pos = Vector2.Zero;
+            position = new Vector3(0, 0, 0);
+            angle = 0;
 
             base.Initialize();
         }
@@ -44,7 +51,9 @@ namespace Testes_Iniciais
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            SpriteTexture = Content.Load<Texture2D>("textures/test");
+            model = Content.Load<Model>("models/spaceship");
+            
+            
 
             // TODO: use this.Content to load your game content here
         }
@@ -69,6 +78,9 @@ namespace Testes_Iniciais
                 Exit();
 
             // TODO: Add your update logic here
+            position += new Vector3(0, 0.01f, 0);
+            angle += 0.03f;
+            world = Matrix.CreateRotationY(angle) * Matrix.CreateTranslation(position);
 
             base.Update(gameTime);
         }
@@ -79,14 +91,21 @@ namespace Testes_Iniciais
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.World = world;
+                    effect.View = view;
+                    effect.Projection = projection;
+                }
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(SpriteTexture, pos, Color.White);
-            spriteBatch.End();
-
+                mesh.Draw();
+            }
+           
             base.Draw(gameTime);
         }
     }
