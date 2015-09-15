@@ -11,10 +11,14 @@ namespace Testes_Iniciais
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D SpriteTexture;
+        Vector2 pos;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1366;
+            graphics.PreferredBackBufferHeight = 768;
             Content.RootDirectory = "Content";
         }
 
@@ -27,6 +31,7 @@ namespace Testes_Iniciais
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            pos = Vector2.Zero;
 
             base.Initialize();
         }
@@ -39,6 +44,7 @@ namespace Testes_Iniciais
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteTexture = Content.Load<Texture2D>("textures/test");
 
             // TODO: use this.Content to load your game content here
         }
@@ -76,6 +82,10 @@ namespace Testes_Iniciais
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+            spriteBatch.Draw(SpriteTexture, pos, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

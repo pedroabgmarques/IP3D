@@ -23,3 +23,4 @@ C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\
 C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\obj\x86\Debug\Testes Iniciais.csprojResolveAssemblyReference.cache
 C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\obj\x86\Debug\Testes Iniciais.exe
 C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\obj\x86\Debug\Testes Iniciais.pdb
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\Content\textures\test.jpg
