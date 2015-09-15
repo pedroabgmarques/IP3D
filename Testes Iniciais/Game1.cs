@@ -15,7 +15,7 @@ namespace Testes_Iniciais
         private float angle;
 
         private Matrix world = Matrix.CreateTranslation(Vector3.Zero);
-        private Matrix view = Matrix.CreateLookAt(new Vector3(0, 0, 10), new Vector3(0, 0, 0), Vector3.UnitY);
+        private Matrix view = Matrix.CreateLookAt(new Vector3(0, 0, 40), new Vector3(0, 0, 0), Vector3.UnitY);
         private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
 
         private Vector3 position;
@@ -78,9 +78,34 @@ namespace Testes_Iniciais
                 Exit();
 
             // TODO: Add your update logic here
-            position += new Vector3(0, 0.01f, 0);
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                position -= new Vector3(0.1f, 0, 0);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                position += new Vector3(0.1f, 0, 0);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                position += new Vector3(0, 0.1f, 0);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                position -= new Vector3(0, 0.1f, 0);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                position += new Vector3(0, 0, 0.1f);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Z))
+            {
+                position -= new Vector3(0, 0, 0.1f);
+            }
+
             angle += 0.03f;
-            world = Matrix.CreateRotationY(angle) * Matrix.CreateTranslation(position);
+            world = Matrix.CreateRotationY(angle) * Matrix.CreateRotationX(angle) * Matrix.CreateRotationZ(angle) * Matrix.CreateTranslation(position);
 
             base.Update(gameTime);
         }
