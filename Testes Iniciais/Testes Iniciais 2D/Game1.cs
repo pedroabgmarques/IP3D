@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Testes_Iniciais
+namespace Testes_Iniciais_2D
 {
     /// <summary>
     /// This is the main type for your game.
@@ -11,18 +11,10 @@ namespace Testes_Iniciais
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Model modelo;
-        GameModel desenho3D;
-        
-        private Matrix world = Matrix.CreateTranslation(Vector3.Zero);
-        private Matrix view = Matrix.CreateLookAt(new Vector3(0, 0, 40), new Vector3(0, 0, 0), Vector3.UnitY);
-        private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1024;
-            graphics.PreferredBackBufferHeight = 600;
             Content.RootDirectory = "Content";
         }
 
@@ -35,6 +27,7 @@ namespace Testes_Iniciais
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
             base.Initialize();
         }
 
@@ -46,9 +39,8 @@ namespace Testes_Iniciais
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            modelo = Content.Load<Model>("models/spaceship");
-            desenho3D = new GameModel(this, modelo, Vector3.Zero, 0);
-            this.Components.Add(desenho3D);
+
+            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -72,11 +64,6 @@ namespace Testes_Iniciais
 
             // TODO: Add your update logic here
 
-            world = Matrix.CreateRotationY(desenho3D.angle) * 
-                Matrix.CreateRotationX(desenho3D.angle) * 
-                Matrix.CreateRotationZ(desenho3D.angle) * 
-                Matrix.CreateTranslation(desenho3D.position);
-
             base.Update(gameTime);
         }
 
@@ -86,21 +73,10 @@ namespace Testes_Iniciais
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            foreach (ModelMesh mesh in desenho3D.modelo.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.World = world;
-                    effect.View = view;
-                    effect.Projection = projection;
-                }
 
-                mesh.Draw();
-            }
-           
             base.Draw(gameTime);
         }
     }

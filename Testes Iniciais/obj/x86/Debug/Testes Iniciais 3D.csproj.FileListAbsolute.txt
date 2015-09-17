@@ -1,0 +1,30 @@
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\Content\spaceship.xnb
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\Content\textures\test.jpg
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\Content\models\spaceship.xnb
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\Content\spaceship.fbx
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\Testes Iniciais.exe
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\Testes Iniciais.pdb
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\IgnoreMe.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\MonoGame.Framework.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.MediaFoundation.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.XAudio2.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.Direct3D11.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.DXGI.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.Direct2D1.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.XInput.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.RawInput.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.Direct3D9.dll
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\MonoGame.Framework.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.MediaFoundation.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.XAudio2.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.Direct3D11.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.DXGI.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.Direct2D1.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.XInput.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.RawInput.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\bin\Windows\Debug\SharpDX.Direct3D9.xml
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\obj\x86\Debug\Testes Iniciais 3D.csprojResolveAssemblyReference.cache
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\obj\x86\Debug\Testes Iniciais.exe
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Testes Iniciais\obj\x86\Debug\Testes Iniciais.pdb
