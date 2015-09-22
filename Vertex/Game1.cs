@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Vertex
 {
@@ -11,13 +13,19 @@ namespace Vertex
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Random random;
 
-        //Matrizes World, View e Projection
-        Matrix World, View, Projection;
+        //Lista de geometrias a desenhar
+        Geometry geometria;
+        List<Geometry> geometrias;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferMultiSampling = true;
+            graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferHeight = 600;
             Content.RootDirectory = "Content";
         }
 
@@ -29,19 +37,22 @@ namespace Vertex
         /// </summary>
         protected override void Initialize()
         {
-            
-            //Inicializar as matrizes world, view e projection
-            World = Matrix.CreateTranslation(0, 0, 0);
-            View = Matrix.CreateLookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 
-                GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Height, 
-                0.01f, 
-                100f);
 
-            //Criar e definir o resterizerState a utilizar para desenhar a geometria
-            RasterizerState rasterizerState = new RasterizerState();
-            rasterizerState.CullMode = CullMode.None;
-            GraphicsDevice.RasterizerState = rasterizerState;
+            //Inicializar a camara
+            Camera.Initialize(GraphicsDevice);
+
+            //Seed random
+            random = new Random();
+
+            geometrias = new List<Geometry>();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                //Inicializara geometria
+                geometria = new Geometry(GraphicsDevice, random);
+                geometrias.Add(geometria);
+            }
+                
 
             base.Initialize();
         }
@@ -56,7 +67,11 @@ namespace Vertex
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Carregar o efeito a utilizar para desenhar a geometria
-            Geometry.LoadContent(GraphicsDevice);
+            foreach (Geometry geometria in geometrias)
+            {
+                geometria.LoadContent(GraphicsDevice, Content);
+            }
+            
 
         }
 
@@ -90,11 +105,14 @@ namespace Vertex
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             //Desenhar a geometria
-            Geometry.Draw(World, View, Projection, GraphicsDevice);
-
+            foreach (Geometry geometria in geometrias)
+            {
+                geometria.Draw(Camera.World, Camera.View, Camera.Projection, GraphicsDevice);
+            }
+            
             base.Draw(gameTime);
         }
     }
