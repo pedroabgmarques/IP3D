@@ -34,6 +34,8 @@ namespace Vertex
         private Vector3 size;
         //Posição do cubo no mundo
         private Vector3 position;
+        //Velocidade da rotacao
+        private int vRotacao;
 
         /// <summary>
         /// Construtor
@@ -55,8 +57,9 @@ namespace Vertex
             //3 vértices, 1 triângulo
             vertexList = new VertexPositionNormalTexture[36];
 
-            position = new Vector3(random.Next(-35, 35), random.Next(-35, 35), random.Next(-90, 0));
+            position = new Vector3(random.Next(-25, 25), random.Next(-15, 15), random.Next(-30, 0));
             size = Vector3.One;
+            vRotacao = random.Next(40, 100);
 
             // Calculate the position of the vertices on the top face.
             Vector3 topLeftFront = position + new Vector3(size.X, size.Y, size.Z);
@@ -155,9 +158,9 @@ namespace Vertex
             //World, View, Projection
             efeito.World *= Matrix.CreateTranslation(-position) //Voltar para a origem
                 * Matrix.CreateTranslation(-size.X / 2, -size.Y / 2, -size.Z / 2) //Origem no centro do objeto
-                * Matrix.CreateRotationX(MathHelper.PiOver4 / 100) //Rotações
-                * Matrix.CreateRotationY(MathHelper.PiOver4 / 100)
-                * Matrix.CreateRotationZ(MathHelper.PiOver4 / 100)
+                * Matrix.CreateRotationX(MathHelper.PiOver4 / vRotacao) //Rotações
+                * Matrix.CreateRotationY(MathHelper.PiOver4 / vRotacao)
+                * Matrix.CreateRotationZ(MathHelper.PiOver4 / vRotacao)
                 * Matrix.CreateTranslation(position) //Voltar para a posição inicial
                 * Matrix.CreateTranslation(size.X / 2, size.Y / 2, size.Z / 2); //"Descentrar"
             efeito.View = View;

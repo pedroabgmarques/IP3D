@@ -24,8 +24,8 @@ namespace Vertex
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferMultiSampling = true;
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
-            graphics.PreferredBackBufferWidth = 1200;
-            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = 700;
+            graphics.PreferredBackBufferHeight = 700;
             Content.RootDirectory = "Content";
         }
 
@@ -46,7 +46,7 @@ namespace Vertex
 
             geometrias = new List<Geometry>();
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 350; i++)
             {
                 //Inicializara geometria
                 geometria = new Geometry(GraphicsDevice, random);
