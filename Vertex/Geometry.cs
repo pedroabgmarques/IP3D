@@ -59,7 +59,7 @@ namespace Vertex
 
             position = new Vector3(random.Next(-25, 25), random.Next(-15, 15), random.Next(-30, 30));
             size = Vector3.One;
-            vRotacao = random.Next(40, 100);
+            vRotacao = random.Next(20, 200);
 
             // Calculate the position of the vertices on the top face.
             Vector3 topLeftFront = position + new Vector3(size.X, size.Y, size.Z);
