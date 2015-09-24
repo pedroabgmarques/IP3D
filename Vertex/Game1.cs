@@ -44,6 +44,9 @@ namespace Vertex
             //Seed random
             random = new Random();
 
+            //3DAxis
+            Create3DAxis.Initialize(GraphicsDevice);
+
             geometrias = new List<Geometry>();
 
             for (int i = 0; i < 350; i++)
@@ -94,7 +97,8 @@ namespace Vertex
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            //Atualizar camera
+            Camera.Update(gameTime, GraphicsDevice);
 
             base.Update(gameTime);
         }
@@ -106,6 +110,9 @@ namespace Vertex
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+
+            //Desenhar 3DAxis
+            Create3DAxis.Draw(Camera.World, Camera.View, Camera.Projection, GraphicsDevice);
 
             //Desenhar a geometria
             foreach (Geometry geometria in geometrias)

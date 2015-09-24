@@ -57,7 +57,7 @@ namespace Vertex
             //3 vértices, 1 triângulo
             vertexList = new VertexPositionNormalTexture[36];
 
-            position = new Vector3(random.Next(-25, 25), random.Next(-15, 15), random.Next(-30, 0));
+            position = new Vector3(random.Next(-25, 25), random.Next(-15, 15), random.Next(-30, 30));
             size = Vector3.One;
             vRotacao = random.Next(40, 100);
 
@@ -137,7 +137,6 @@ namespace Vertex
 
             //Inserir os vértices no buffer
             vertexBuffer = new VertexBuffer(graphics, typeof(VertexPositionNormalTexture), vertexList.GetLength(0), BufferUsage.WriteOnly);
-            vertexBuffer.SetData<VertexPositionNormalTexture>(vertexList);
 
             return vertexBuffer;
         }
@@ -156,7 +155,7 @@ namespace Vertex
         public void Draw(Matrix World, Matrix View, Matrix Projection, GraphicsDevice graphics)
         {
             //World, View, Projection
-            efeito.World *= Matrix.CreateTranslation(-position) //Voltar para a origem
+            efeito.World *=  Matrix.CreateTranslation(-position) //Voltar para a origem
                 * Matrix.CreateTranslation(-size.X / 2, -size.Y / 2, -size.Z / 2) //Origem no centro do objeto
                 * Matrix.CreateRotationX(MathHelper.PiOver4 / vRotacao) //Rotações
                 * Matrix.CreateRotationY(MathHelper.PiOver4 / vRotacao)
