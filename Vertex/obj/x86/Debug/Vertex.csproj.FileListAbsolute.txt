@@ -24,3 +24,4 @@ C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Vertex\obj\x86\Debug\Vertex.exe
 C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Vertex\obj\x86\Debug\Vertex.pdb
 C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Vertex\obj\x86\Debug\Vertex.csprojResolveAssemblyReference.cache
 C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Vertex\bin\Windows\Debug\Content\box_texture.jpg
+C:\Users\nlopes\Documents\IPCA\EDJD\code\IP3D\Vertex\bin\Windows\Debug\Content\logo_ipca.png

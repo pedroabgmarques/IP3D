@@ -14,28 +14,27 @@ namespace Vertex
         /// <summary>
         /// Array para guardar os vértices e respetivas cores
         /// </summary>
-        private VertexPositionNormalTexture[] vertexList;
+        private VertexPositionNormalTexture[] vertexes;
 
         /// <summary>
         /// Buffer de vértices a desenhar
         /// </summary>
         private VertexBuffer vertexBuffer;
 
-        private BasicEffect efeito;
-        /// <summary>
-        /// Efeito a utilizar para desenhar a geometria
-        /// </summary>
-        public BasicEffect Efeito
-        {
-            get { return efeito; }
-        }
-
         //Tamanho do lado do quadrado
         private Vector3 size;
         //Posição do cubo no mundo
-        private Vector3 position;
-        //Velocidade da rotacao
-        private int vRotacao;
+        public Vector3 position;
+        //Rotação
+        public float Rotacao;
+        private float vRotacao;
+
+        /// <summary>
+        /// Utilizado para verificar se o objeto está visível do ponto de vista da camera
+        /// </summary>
+        public BoundingSphere boundingSphere;
+
+        bool rotateX, rotateY, rotateZ;
 
         /// <summary>
         /// Construtor
@@ -43,9 +42,23 @@ namespace Vertex
         public Geometry(GraphicsDevice graphics, Random random)
         {
             this.vertexBuffer = Create3DGeometry(graphics, random);
-        }
+            rotateX = false;
+            rotateY = false;
+            rotateZ = false;
 
-        Texture2D textura;
+            if (random.NextDouble() > 0.5)
+            {
+                rotateX = true;
+            }
+            if (random.NextDouble() > 0.5)
+            {
+                rotateY = true;
+            }
+            if (random.NextDouble() > 0.5)
+            {
+                rotateZ = true;
+            }
+        }
         
         /// <summary>
         /// Define a geometria a ser desenhada
@@ -55,88 +68,167 @@ namespace Vertex
         private VertexBuffer Create3DGeometry(GraphicsDevice graphics, Random random)
         {
             //3 vértices, 1 triângulo
-            vertexList = new VertexPositionNormalTexture[36];
+            vertexes = new VertexPositionNormalTexture[36];
 
-            position = new Vector3(random.Next(-25, 25), random.Next(-15, 15), random.Next(-30, 30));
-            size = Vector3.One;
-            vRotacao = random.Next(20, 200);
+            position = new Vector3(random.Next(-Camera.worldSize / 2, Camera.worldSize / 2),
+                random.Next(-Camera.worldSize / 2, Camera.worldSize / 2), 
+                random.Next(-Camera.worldSize / 2, Camera.worldSize / 2));
+            int sideSize = 2;//random.Next(0, 3);
+            size = new Vector3(sideSize, sideSize, sideSize);
+            vRotacao = (float)random.NextDouble() / 20f;
+            Rotacao = (float)random.NextDouble() / 20f;
 
             // Calculate the position of the vertices on the top face.
-            Vector3 topLeftFront = position + new Vector3(size.X, size.Y, size.Z);
-            Vector3 topLeftBack = position + new Vector3(0, size.Y, size.Z);
-            Vector3 topRightFront = position + new Vector3(size.X, size.Y, 0);
-            Vector3 topRightBack = position + new Vector3(0, size.Y, 0);
+
+            Vector3 topLeftFront = new Vector3(-1.0f, 1.0f, -1.0f);
+
+            Vector3 topLeftBack = new Vector3(-1.0f, 1.0f, 1.0f);
+
+            Vector3 topRightFront = new Vector3(1.0f, 1.0f, -1.0f);
+
+            Vector3 topRightBack = new Vector3(1.0f, 1.0f, 1.0f);
+
+
 
             // Calculate the position of the vertices on the bottom face.
-            Vector3 btmLeftFront = position + new Vector3(size.X, 0, size.Z);
-            Vector3 btmLeftBack = position + new Vector3(0, 0, size.Z);
-            Vector3 btmRightFront = position + new Vector3(size.X, 0, 0);
-            Vector3 btmRightBack = position;
+
+            Vector3 btmLeftFront = new Vector3(-1.0f, -1.0f, -1.0f);
+
+            Vector3 btmLeftBack = new Vector3(-1.0f, -1.0f, 1.0f);
+
+            Vector3 btmRightFront = new Vector3(1.0f, -1.0f, -1.0f);
+
+            Vector3 btmRightBack = new Vector3(1.0f, -1.0f, 1.0f);
+
+
 
             // Normal vectors for each face (needed for lighting / display)
-            Vector3 normalFront = new Vector3(0.0f, 0.0f, 1.0f) * size;
-            Vector3 normalBack = new Vector3(0.0f, 0.0f, -1.0f) * size;
-            Vector3 normalTop = new Vector3(0.0f, 1.0f, 0.0f) * size;
-            Vector3 normalBottom = new Vector3(0.0f, -1.0f, 0.0f) * size;
-            Vector3 normalLeft = new Vector3(-1.0f, 0.0f, 0.0f) * size;
-            Vector3 normalRight = new Vector3(1.0f, 0.0f, 0.0f) * size;
+
+            Vector3 normalFront = new Vector3(0.0f, 0.0f, -1.0f);
+
+            Vector3 normalBack = new Vector3(0.0f, 0.0f, 1.0f);
+
+            Vector3 normalTop = new Vector3(0.0f, 1.0f, 0.0f);
+
+            Vector3 normalBottom = new Vector3(0.0f, -1.0f, 0.0f);
+
+            Vector3 normalLeft = new Vector3(-1.0f, 0.0f, 0.0f);
+
+            Vector3 normalRight = new Vector3(1.0f, 0.0f, 0.0f);
+
+
 
             // UV texture coordinates
+
             Vector2 textureTopLeft = new Vector2(1.0f, 0.0f);
+
             Vector2 textureTopRight = new Vector2(0.0f, 0.0f);
+
             Vector2 textureBottomLeft = new Vector2(1.0f, 1.0f);
+
             Vector2 textureBottomRight = new Vector2(0.0f, 1.0f);
 
+
+
             // Add the vertices for the FRONT face.
-            vertexList[0] = new VertexPositionNormalTexture(topLeftFront, normalFront, textureTopLeft);
-            vertexList[1] = new VertexPositionNormalTexture(btmLeftFront, normalFront, textureBottomLeft);
-            vertexList[2] = new VertexPositionNormalTexture(topRightFront, normalFront, textureTopRight);
-            vertexList[3] = new VertexPositionNormalTexture(btmLeftFront, normalFront, textureBottomLeft);
-            vertexList[4] = new VertexPositionNormalTexture(btmRightFront, normalFront, textureBottomRight);
-            vertexList[5] = new VertexPositionNormalTexture(topRightFront, normalFront, textureTopRight);
+
+            vertexes[0] = new VertexPositionNormalTexture(topLeftFront, normalFront, textureTopLeft);
+
+            vertexes[1] = new VertexPositionNormalTexture(btmLeftFront, normalFront, textureBottomLeft);
+
+            vertexes[2] = new VertexPositionNormalTexture(topRightFront, normalFront, textureTopRight);
+
+            vertexes[3] = new VertexPositionNormalTexture(btmLeftFront, normalFront, textureBottomLeft);
+
+            vertexes[4] = new VertexPositionNormalTexture(btmRightFront, normalFront, textureBottomRight);
+
+            vertexes[5] = new VertexPositionNormalTexture(topRightFront, normalFront, textureTopRight);
+
+
 
             // Add the vertices for the BACK face.
-            vertexList[6] = new VertexPositionNormalTexture(topLeftBack, normalBack, textureTopRight);
-            vertexList[7] = new VertexPositionNormalTexture(topRightBack, normalBack, textureTopLeft);
-            vertexList[8] = new VertexPositionNormalTexture(btmLeftBack, normalBack, textureBottomRight);
-            vertexList[9] = new VertexPositionNormalTexture(btmLeftBack, normalBack, textureBottomRight);
-            vertexList[10] = new VertexPositionNormalTexture(topRightBack, normalBack, textureTopLeft);
-            vertexList[11] = new VertexPositionNormalTexture(btmRightBack, normalBack, textureBottomLeft);
+
+            vertexes[6] = new VertexPositionNormalTexture(topLeftBack, normalBack, textureTopRight);
+
+            vertexes[7] = new VertexPositionNormalTexture(topRightBack, normalBack, textureTopLeft);
+
+            vertexes[8] = new VertexPositionNormalTexture(btmLeftBack, normalBack, textureBottomRight);
+
+            vertexes[9] = new VertexPositionNormalTexture(btmLeftBack, normalBack, textureBottomRight);
+
+            vertexes[10] = new VertexPositionNormalTexture(topRightBack, normalBack, textureTopLeft);
+
+            vertexes[11] = new VertexPositionNormalTexture(btmRightBack, normalBack, textureBottomLeft);
+
+
 
             // Add the vertices for the TOP face.
-            vertexList[12] = new VertexPositionNormalTexture(topLeftFront, normalTop, textureBottomLeft);
-            vertexList[13] = new VertexPositionNormalTexture(topRightBack, normalTop, textureTopRight);
-            vertexList[14] = new VertexPositionNormalTexture(topLeftBack, normalTop, textureTopLeft);
-            vertexList[15] = new VertexPositionNormalTexture(topLeftFront, normalTop, textureBottomLeft);
-            vertexList[16] = new VertexPositionNormalTexture(topRightFront, normalTop, textureBottomRight);
-            vertexList[17] = new VertexPositionNormalTexture(topRightBack, normalTop, textureTopRight);
+
+            vertexes[12] = new VertexPositionNormalTexture(topLeftFront, normalTop, textureBottomLeft);
+
+            vertexes[13] = new VertexPositionNormalTexture(topRightBack, normalTop, textureTopRight);
+
+            vertexes[14] = new VertexPositionNormalTexture(topLeftBack, normalTop, textureTopLeft);
+
+            vertexes[15] = new VertexPositionNormalTexture(topLeftFront, normalTop, textureBottomLeft);
+
+            vertexes[16] = new VertexPositionNormalTexture(topRightFront, normalTop, textureBottomRight);
+
+            vertexes[17] = new VertexPositionNormalTexture(topRightBack, normalTop, textureTopRight);
+
+
 
             // Add the vertices for the BOTTOM face. 
-            vertexList[18] = new VertexPositionNormalTexture(btmLeftFront, normalBottom, textureTopLeft);
-            vertexList[19] = new VertexPositionNormalTexture(btmLeftBack, normalBottom, textureBottomLeft);
-            vertexList[20] = new VertexPositionNormalTexture(btmRightBack, normalBottom, textureBottomRight);
-            vertexList[21] = new VertexPositionNormalTexture(btmLeftFront, normalBottom, textureTopLeft);
-            vertexList[22] = new VertexPositionNormalTexture(btmRightBack, normalBottom, textureBottomRight);
-            vertexList[23] = new VertexPositionNormalTexture(btmRightFront, normalBottom, textureTopRight);
+
+            vertexes[18] = new VertexPositionNormalTexture(btmLeftFront, normalBottom, textureTopLeft);
+
+            vertexes[19] = new VertexPositionNormalTexture(btmLeftBack, normalBottom, textureBottomLeft);
+
+            vertexes[20] = new VertexPositionNormalTexture(btmRightBack, normalBottom, textureBottomRight);
+
+            vertexes[21] = new VertexPositionNormalTexture(btmLeftFront, normalBottom, textureTopLeft);
+
+            vertexes[22] = new VertexPositionNormalTexture(btmRightBack, normalBottom, textureBottomRight);
+
+            vertexes[23] = new VertexPositionNormalTexture(btmRightFront, normalBottom, textureTopRight);
+
+
 
             // Add the vertices for the LEFT face.
-            vertexList[24] = new VertexPositionNormalTexture(topLeftFront, normalLeft, textureTopRight);
-            vertexList[25] = new VertexPositionNormalTexture(btmLeftBack, normalLeft, textureBottomLeft);
-            vertexList[26] = new VertexPositionNormalTexture(btmLeftFront, normalLeft, textureBottomRight);
-            vertexList[27] = new VertexPositionNormalTexture(topLeftBack, normalLeft, textureTopLeft);
-            vertexList[28] = new VertexPositionNormalTexture(btmLeftBack, normalLeft, textureBottomLeft);
-            vertexList[29] = new VertexPositionNormalTexture(topLeftFront, normalLeft, textureTopRight);
+
+            vertexes[24] = new VertexPositionNormalTexture(topLeftFront, normalLeft, textureTopRight);
+
+            vertexes[25] = new VertexPositionNormalTexture(btmLeftBack, normalLeft, textureBottomLeft);
+
+            vertexes[26] = new VertexPositionNormalTexture(btmLeftFront, normalLeft, textureBottomRight);
+
+            vertexes[27] = new VertexPositionNormalTexture(topLeftBack, normalLeft, textureTopLeft);
+
+            vertexes[28] = new VertexPositionNormalTexture(btmLeftBack, normalLeft, textureBottomLeft);
+
+            vertexes[29] = new VertexPositionNormalTexture(topLeftFront, normalLeft, textureTopRight);
+
+
 
             // Add the vertices for the RIGHT face. 
-            vertexList[30] = new VertexPositionNormalTexture(topRightFront, normalRight, textureTopLeft);
-            vertexList[31] = new VertexPositionNormalTexture(btmRightFront, normalRight, textureBottomLeft);
-            vertexList[32] = new VertexPositionNormalTexture(btmRightBack, normalRight, textureBottomRight);
-            vertexList[33] = new VertexPositionNormalTexture(topRightBack, normalRight, textureTopRight);
-            vertexList[34] = new VertexPositionNormalTexture(topRightFront, normalRight, textureTopLeft);
-            vertexList[35] = new VertexPositionNormalTexture(btmRightBack, normalRight, textureBottomRight);
+
+            vertexes[30] = new VertexPositionNormalTexture(topRightFront, normalRight, textureTopLeft);
+
+            vertexes[31] = new VertexPositionNormalTexture(btmRightFront, normalRight, textureBottomLeft);
+
+            vertexes[32] = new VertexPositionNormalTexture(btmRightBack, normalRight, textureBottomRight);
+
+            vertexes[33] = new VertexPositionNormalTexture(topRightBack, normalRight, textureTopRight);
+
+            vertexes[34] = new VertexPositionNormalTexture(topRightFront, normalRight, textureTopLeft);
+
+            vertexes[35] = new VertexPositionNormalTexture(btmRightBack, normalRight, textureBottomRight);
+
+            boundingSphere.Center = Vector3.Transform(position, Matrix.CreateTranslation(size.X / 2, size.Y / 2, size.Z / 2));
+            boundingSphere.Radius = sideSize;
 
             //Inserir os vértices no buffer
-            vertexBuffer = new VertexBuffer(graphics, typeof(VertexPositionNormalTexture), vertexList.GetLength(0), BufferUsage.WriteOnly);
+            //vertexBuffer = new VertexBuffer(graphics, typeof(VertexPositionNormalTexture), vertexes.GetLength(0), BufferUsage.WriteOnly);
 
             return vertexBuffer;
         }
@@ -148,40 +240,39 @@ namespace Vertex
         public void LoadContent(GraphicsDevice graphics, ContentManager content)
         {
             //Criar um basicEffect que vamos usar para renderizar o triângulo
-            efeito = new BasicEffect(graphics);
-            textura = content.Load<Texture2D>("box_texture");
+            
         }
 
-        public void Draw(Matrix World, Matrix View, Matrix Projection, GraphicsDevice graphics)
+        public void Draw(Matrix World, Matrix View, Matrix Projection, GraphicsDevice graphics, ref BasicEffect efeito, Random random)
         {
-            //World, View, Projection
-            efeito.World *=  Matrix.CreateTranslation(-position) //Voltar para a origem
-                * Matrix.CreateTranslation(-size.X / 2, -size.Y / 2, -size.Z / 2) //Origem no centro do objeto
-                * Matrix.CreateRotationX(MathHelper.PiOver4 / vRotacao) //Rotações
-                * Matrix.CreateRotationY(MathHelper.PiOver4 / vRotacao)
-                * Matrix.CreateRotationZ(MathHelper.PiOver4 / vRotacao)
-                * Matrix.CreateTranslation(position) //Voltar para a posição inicial
-                * Matrix.CreateTranslation(size.X / 2, size.Y / 2, size.Z / 2); //"Descentrar"
-            efeito.View = View;
-            efeito.Projection = Projection;
+            Rotacao += vRotacao;
 
-            //Textura
-            efeito.TextureEnabled = true;
-            efeito.Texture = textura;
+            //// Load the buffer
+            //vertexBuffer.SetData(vertexes);
 
-            //Iluminação
-            efeito.EnableDefaultLighting();
-            
-            // Load the buffer
-            vertexBuffer.SetData(vertexList);
+            //// Send the vertex buffer to the device
+            //graphics.SetVertexBuffer(vertexBuffer);
 
-            // Send the vertex buffer to the device
-            graphics.SetVertexBuffer(vertexBuffer);
+            efeito.World = Matrix.CreateRotationX(Rotacao);
+
+            if(rotateX){
+                efeito.World *= Matrix.CreateRotationX(Rotacao);
+            }
+            if (rotateY)
+            {
+                efeito.World *= Matrix.CreateRotationY(Rotacao);
+            }
+            if (rotateZ)
+            {
+                efeito.World *= Matrix.CreateRotationZ(Rotacao);
+            }  
+
+            efeito.World *= Matrix.CreateScale(0.8f) * Matrix.CreateTranslation(position);
 
             foreach (EffectPass pass in efeito.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                graphics.DrawUserPrimitives(PrimitiveType.TriangleList, vertexList, 0, 12);
+                graphics.DrawUserPrimitives(PrimitiveType.TriangleList, vertexes, 0, 12);
             }
         }
 

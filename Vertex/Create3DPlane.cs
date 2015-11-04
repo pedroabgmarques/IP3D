@@ -1,0 +1,60 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Vertex
+{
+    class Create3DPlane
+    {
+        private VertexPositionNormalTexture[] vertexes;
+
+        public Create3DPlane(Vector3 position, float size, Vector3 normal)
+        {
+            vertexes = new VertexPositionNormalTexture[6];
+
+            //Vértices
+            //1º triângulo
+            Vector3 topLeft = new Vector3(position.X - size / 2, position.Y - size / 2, position.Z);
+            Vector3 bottomLeft = new Vector3(position.X - size / 2, position.Y + size - size / 2, position.Z);
+            Vector3 topRight = new Vector3(position.X + size - size / 2, position.Y - size / 2, position.Z);
+
+            //2º triângulo
+            //bottomLeft já está definido
+            Vector3 bottomRight = new Vector3(position.X + size - size / 2, position.Y + size - size / 2, position.Z);
+            //topRight já está definido
+
+            // UV texture coordinates
+            Vector2 textureTopLeft = new Vector2(0.0f, 1.0f);
+            Vector2 textureTopRight = new Vector2(1.0f, 1.0f);
+            Vector2 textureBottomLeft = new Vector2(0.0f, 0.0f);
+            Vector2 textureBottomRight = new Vector2(1.0f, 0.0f);
+
+            vertexes[0] = new VertexPositionNormalTexture(topLeft, normal, textureTopLeft);
+            vertexes[1] = new VertexPositionNormalTexture(bottomLeft, normal, textureBottomLeft);
+            vertexes[2] = new VertexPositionNormalTexture(topRight, normal, textureTopRight);
+
+            vertexes[3] = new VertexPositionNormalTexture(bottomLeft, normal, textureBottomLeft);
+            vertexes[4] = new VertexPositionNormalTexture(bottomRight, normal, textureBottomRight);
+            vertexes[5] = new VertexPositionNormalTexture(topRight, normal, textureTopRight);
+        }
+
+        public void Draw(Matrix World, Matrix View, Matrix Projection, GraphicsDevice graphics, BasicEffect efeito)
+        {
+
+            //World, View, Projection
+            efeito.World = World;
+            efeito.View = View;
+            efeito.Projection = Projection;
+
+            foreach (EffectPass pass in efeito.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                graphics.DrawUserPrimitives(PrimitiveType.TriangleList, vertexes, 0, 2);
+            }
+        }
+
+    }
+}

@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Vertex
+namespace TPC1_10855
 {
+    /// <summary>
+    /// Cria e desenha um eixo 3D
+    /// </summary>
     static class Create3DAxis
     {
         /// <summary>
@@ -15,26 +18,10 @@ namespace Vertex
         static private VertexPositionColor[] vertexList;
 
         /// <summary>
-        /// Buffer de vértices a desenhar
+        /// Gera a geometria
         /// </summary>
-        static private VertexBuffer vertexBuffer;
-
-        static private BasicEffect efeito;
-        /// <summary>
-        /// Efeito a utilizar para desenhar a geometria
-        /// </summary>
-        static public BasicEffect Efeito
-        {
-            get { return efeito; }
-        }
-
+        /// <param name="graphics"></param>
         static public void Initialize(GraphicsDevice graphics)
-        {
-            vertexBuffer = Initialize3DAxis(graphics);
-            efeito = new BasicEffect(graphics);
-        }
-
-        static private VertexBuffer Initialize3DAxis(GraphicsDevice graphics)
         {
             vertexList = new VertexPositionColor[6];
             int size = 2;
@@ -50,18 +37,18 @@ namespace Vertex
             //Eixo dos ZZ
             vertexList[4] = new VertexPositionColor(new Vector3(0, 0, -size), Color.Blue);
             vertexList[5] = new VertexPositionColor(new Vector3(0, 0, size), Color.Blue);
-
-            vertexBuffer = new VertexBuffer(graphics, typeof(VertexPositionColor), vertexList.GetLength(0), BufferUsage.WriteOnly);
-
-            return vertexBuffer;
         }
 
-        static public void Draw(Matrix World, Matrix View, Matrix Projection, GraphicsDevice graphics, Matrix world)
+        /// <summary>
+        /// Desenha a geometria
+        /// </summary>
+        /// <param name="graphics">Instância de graphicsDevice</param>
+        static public void Draw(GraphicsDevice graphics, BasicEffect efeito)
         {
             //World, View, Projection
-            efeito.World = world;
-            efeito.View = View;
-            efeito.Projection = Projection;
+            efeito.World = Camera.World;
+            efeito.View = Camera.View;
+            efeito.Projection = Camera.Projection;
 
             //Iluminação
             efeito.VertexColorEnabled = true;
@@ -70,13 +57,7 @@ namespace Vertex
             efeito.FogEnabled = true;
             efeito.FogColor = Vector3.Zero;
             efeito.FogStart = Camera.nearPlane;
-            efeito.FogEnd = Camera.farPlaneShort;
-
-            //Load the buffer
-            vertexBuffer.SetData(vertexList);
-
-            // Send the vertex buffer to the device
-            graphics.SetVertexBuffer(vertexBuffer);
+            efeito.FogEnd = Camera.farPlane;
 
             foreach (EffectPass pass in efeito.CurrentTechnique.Passes)
             {
