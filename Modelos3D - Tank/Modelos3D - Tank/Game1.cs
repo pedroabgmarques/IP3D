@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 
-namespace TPC3_10855
+namespace Modelos3D___Tank
 {
     /// <summary>
     /// This is the main type for your game.
@@ -11,19 +10,16 @@ namespace TPC3_10855
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        Prisma prisma;
-        Random random;
-        BasicEffect efeitoPrisma;
-        BasicEffect efeito3DAxis;
-        BasicEffect efeitoPlano;
-        Texture2D texturaPrisma;
-        Texture2D texturaPlano;
+        BasicEffect efeito;
         Create3DPlane plano;
+        BasicEffect efeitoPlano;
+        Texture2D texturaPlano;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.Window.Title = "Tank";
         }
 
         /// <summary>
@@ -35,9 +31,7 @@ namespace TPC3_10855
         protected override void Initialize()
         {
             Camera.Initialize(GraphicsDevice);
-            Create3DAxis.Initialize(GraphicsDevice);
-            DebugShapeRenderer.Initialize(GraphicsDevice);
-            random = new Random();
+            plano = new Create3DPlane(new Vector3(0, -0.51f, 0), 10, Vector3.Up);
 
             base.Initialize();
         }
@@ -48,45 +42,14 @@ namespace TPC3_10855
         /// </summary>
         protected override void LoadContent()
         {
-            texturaPrisma = Content.Load<Texture2D>("kerbal_space_program");
             texturaPlano = Content.Load<Texture2D>("logo_ipca");
 
-            efeito3DAxis = new BasicEffect(GraphicsDevice);
-            efeito3DAxis.VertexColorEnabled = true;
-
-            efeitoPrisma = new BasicEffect(GraphicsDevice);
-            efeitoPrisma.TextureEnabled = true;
-            efeitoPrisma.Texture = texturaPrisma;
-            efeitoPrisma.LightingEnabled = true; // ativar a iluminação
-
-            //efeitoPrisma.DirectionalLight0.DiffuseColor = new Vector3(10, 8, 7);
-            //efeitoPrisma.DirectionalLight0.Direction = new Vector3(0, 0.5f, 0.5f);
-            //efeitoPrisma.DirectionalLight0.SpecularColor = new Vector3(0.2f, 0.2f, 0.2f);
-            //efeitoPrisma.AmbientLightColor = new Vector3(2.5f, 2.5f, 2.5f);
-            //efeitoPrisma.EmissiveColor = new Vector3(0f, 0f, 0f);
-            //efeitoPrisma.DirectionalLight0.Enabled = true;
-
-            //DEFAULT LIGHTING
-            efeitoPrisma = new BasicEffect(GraphicsDevice);
-            efeitoPrisma.TextureEnabled = true;
-            efeitoPrisma.LightingEnabled = true;
-            efeitoPrisma.EnableDefaultLighting();
-            efeitoPrisma.Texture = texturaPrisma;
-            
+            efeito = new BasicEffect(GraphicsDevice);
 
             efeitoPlano = new BasicEffect(GraphicsDevice);
             efeitoPlano.TextureEnabled = true;
             efeitoPlano.EnableDefaultLighting();
             efeitoPlano.Texture = texturaPlano;
-
-            //Configurar aqui os parametros do prima e do plano
-            int nLados = 360;
-            int radius = 1;
-            int altura = 2;
-            int dimensaoPlano = 20;
-
-            prisma = new Prisma(GraphicsDevice, random, Vector3.Zero, nLados, radius, altura);
-            plano = new Create3DPlane(new Vector3(0, -altura - 0.001f, 0), dimensaoPlano, Vector3.Up);
         }
 
         /// <summary>
@@ -95,8 +58,7 @@ namespace TPC3_10855
         /// </summary>
         protected override void UnloadContent()
         {
-            texturaPlano.Dispose();
-            texturaPrisma.Dispose();
+            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -111,7 +73,6 @@ namespace TPC3_10855
 
             Camera.Update(gameTime, GraphicsDevice);
 
-            prisma.Update();
 
             base.Update(gameTime);
         }
@@ -122,15 +83,14 @@ namespace TPC3_10855
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            Create3DAxis.Draw(GraphicsDevice, efeito3DAxis);
-
-            prisma.Draw(GraphicsDevice, efeitoPrisma);
+            efeito.World = Matrix.Identity;
+            efeito.View = Camera.View;
+            efeito.Projection = Camera.Projection;
 
             plano.Draw(GraphicsDevice, efeitoPlano);
-
-            DebugShapeRenderer.Draw(gameTime, Camera.View, Camera.Projection);
+            
 
             base.Draw(gameTime);
         }
